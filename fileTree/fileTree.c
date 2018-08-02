@@ -10,17 +10,19 @@
 typedef struct node node;
 typedef struct nodeList nodeList;
 
+//node structure of sha tree
 struct node {
     node* left;
     node* right;
     char *data;
 };
 
+//node list structure for sha tree
 struct nodeList {
     nodeList* next;
     node* data;
 };
-//TODO: make nodeList
+//base nodelist aka the leaves
 nodeList *nl;
 
 void addToNodeList(nodeList* nla, node* n);
@@ -28,10 +30,11 @@ int nodeListLength(nodeList* nla);
 void nListInit();
 nodeList* treeLevelGenerator(nodeList* a);
 
-/**
- * meh
- */
 
+/**
+ * @brief: 
+ *      Initializes the Original nodelist
+ */
 void nListInit() {
     nl = (nodeList *) malloc(sizeof(nodeList));
 
@@ -42,7 +45,11 @@ void nListInit() {
 }
 
 /**
+ * @brief: 
+ *      Adds original data to the initial node list
  * 
+ * @params: 
+ *      sha -> the node to be added
  */
 void initialNodeListadd(char * sha){
     nodeList* newNl = (nodeList *) malloc(sizeof(nodeList));
@@ -60,6 +67,14 @@ void initialNodeListadd(char * sha){
     nl->data = newN;
 }
 
+/**
+ * @brief: 
+ *      Adds data to a node list
+ * 
+ * @params:
+ *      nla -> nodelist to be added to 
+ *      n -> the node to be added
+ */
 void addToNodeList(nodeList* nla, node* n) {
     nodeList* newNl = (nodeList *) malloc(sizeof(nodeList));
     newNl->next = nla->next;
@@ -70,18 +85,25 @@ void addToNodeList(nodeList* nla, node* n) {
 }
 
 /**
+ * @brief: 
+ *      Returns the length of the nodelist
  * 
+ * @params:
+ *      nla -> nodelist to be analized
+ * 
+ * @return:
+ *      the nodelist length
  */
-
 int nodeListLength(nodeList* nla) {
     if(nla->next == NULL) return 0;
     else return 1 + nodeListLength(nla->next);
 }
 
 /**
- * 
+ * @brief: 
+ *      Calls the treeLevelGenerator to create a tree
+ *      of shas and prints out the top sha
  */
-
 void parseTree() {
     nodeList* nla = (nodeList*) malloc(sizeof(nodeList));
     nla = nl;
@@ -103,9 +125,16 @@ void parseTree() {
 }
 
 /**
+ * @brief: 
+ *      creates a nodelist that is one 
+ *      level up from the previous nodelist
  * 
+ * @params:
+ *      a -> nodelist used to create d
+ * 
+ * @return:
+ *      d -> the nodelist one level up from a
  */
-
 nodeList* treeLevelGenerator(nodeList* a) {
     int x = nodeListLength(a);
     int i, j;
@@ -139,6 +168,15 @@ nodeList* treeLevelGenerator(nodeList* a) {
     return d;
 }
 
+
+/**
+ * @brief: 
+ *      Prints the sha for testing reasons, and 
+ *      for the top sha
+ * 
+ * @params:
+ *      sha -> the string to be printed.
+ */
 void printSha(char* sha) {
     int i;
 

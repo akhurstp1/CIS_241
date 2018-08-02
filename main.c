@@ -21,27 +21,27 @@ int main () {
     int offset;
     int counterA = 0;
     int counterB = 0;
-
     nListInit();
-
+    //opens the file of file names
     fp1 = fopen(FILE_DOC, "r");
 
     while(fscanf(fp1, "%s", filename) == 1) {
         //printf("%s\n", filename);
+        //adds the entire files contents to a string
         if(populateString(filename, fileStr)) {
+            //creates a sha of that string
             SHA1(fsha, fileStr, strlen(fileStr));
-
+            //adds the created sha to the node list
             initialNodeListadd(fsha);
-
+            //counts the number of files used
             counterA++;
         }
-
+        //counts the number of files given
         counterB++;
     }
 
     printf("Files used: %d\n", counterA);
     printf("Files given: %d\n", counterB);
-
     parseTree();
 }
 
@@ -55,7 +55,6 @@ int main () {
  *  @return: 
  *
  */
-
 int populateString(char* filename, char* string) {
     FILE *fp1;
     char tempString[FILE_LEN];
